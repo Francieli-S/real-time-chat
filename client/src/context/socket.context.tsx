@@ -44,7 +44,6 @@ const SocketsProvider = ({ children }: { children: React.ReactNode }) => {
 
   // BE will fire an event send us these details
   // FE need to have an event listener for these events that are fired
-
   socket.on(EVENTS.SERVER.ROOMS, (value) => {
     setRooms(value);
   });
