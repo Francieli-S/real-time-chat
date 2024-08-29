@@ -20,7 +20,6 @@ function App() {
     return (
       <div>
         <input
-          // id='username-id'
           value={userNameInput}
           onChange={(e) => setUserNameInput(e.target.value)}
           placeholder='user name'
