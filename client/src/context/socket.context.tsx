@@ -25,6 +25,10 @@ export const SocketContext = createContext<Context>({
 
 const SocketsProvider = ({ children }: { children: React.ReactNode }) => {
   const [username, setUsername] = useState<string | undefined>('');
+  const userNameFromLocalStorage = localStorage.getItem('username')
+  if (userNameFromLocalStorage && !username) {
+    setUsername(userNameFromLocalStorage)
+  }
 
   return (
     // We are passing the socket (connection) to every children
