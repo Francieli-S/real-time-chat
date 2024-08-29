@@ -26,8 +26,8 @@ export const RoomsContainer = () => {
         />
         <button onClick={handleCreateRoom}>Create Room</button>
       </div>
-      {rooms.map((room) => (
-        <div key={room.id}>{room.name}</div>
+      {rooms.map(({id, name}) => (
+        <div key={id}>{name}</div>
       ))}
     </div>
   );
