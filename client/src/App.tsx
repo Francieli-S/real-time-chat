@@ -1,35 +1,38 @@
 import { useState } from 'react';
 import { MessagesContainer, RoomsContainer } from './containers';
 import { useSockets } from './context/socket.context';
+import styles from './styles/Home.module.css';
 
 function App() {
   const { socket, username, setUsername } = useSockets();
   const [userNameInput, setUserNameInput] = useState<string>('');
 
   const handleSetUserName = () => {
-    if (!userNameInput) return
-    setUsername(userNameInput)
+    if (!userNameInput) return;
+    setUsername(userNameInput);
     if (username !== undefined) {
-      localStorage.setItem('username', userNameInput );
-      setUserNameInput('')
+      localStorage.setItem('username', userNameInput);
+      setUserNameInput('');
     }
   };
 
   // if no username, display the input fields...
   if (!username)
     return (
-      <div>
-        <input
-          value={userNameInput}
-          onChange={(e) => setUserNameInput(e.target.value)}
-          placeholder='user name'
-        />
-        <button onClick={handleSetUserName}>Log in</button>
+      <div className={styles.userNameWrapper}>
+        <div className={styles.userNameInner}>
+          <input
+            value={userNameInput}
+            onChange={(e) => setUserNameInput(e.target.value)}
+            placeholder='user name'
+          />
+          <button className='cta' onClick={handleSetUserName}>Log in</button>
+        </div>
       </div>
     );
   // ... if username is valid, give access to rooms and messages
   return (
-    <div>
+    <div className={styles.container}>
       <RoomsContainer />
       <MessagesContainer />
     </div>

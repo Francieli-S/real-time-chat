@@ -1,0 +1,31 @@
+.container {
+  min-height:100vh;
+  height: 100vh;
+  display: flex;
+}
+
+.userNameWrapper {
+  width: 100%;
+  display: flex;
+  min-height: 100vh;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+
+.userNameInner {
+  display: flex;
+  background-color: rgba(256, 256, 256, 0.8);
+  padding: 5rem;
+  border-radius: 8px;
+}
+
+.userNameInner input, .userNameInner button {
+  font-size: 1.25rem;
+}
+
+.userNameInner button {
+  margin-left: 1rem;
+  padding: 10px;
+}
+

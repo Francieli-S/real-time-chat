@@ -1,0 +1,64 @@
+.wrapper {
+  min-height: 100vh;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+@media only screen and (max-min: 1200px) {
+  .wrapper {
+    width: calc(100% - 250px);
+  }
+}
+
+.messageList {
+  flex: 1;
+  overflow-y: scroll;
+  padding: 1rem;
+}
+
+.messageBox {
+  display: flex;
+  width: 100%;
+  background-color: rgba(256, 256, 256, 0.8);
+  padding: 1rem;
+}
+
+.messageBox textarea {
+  flex: 1;
+  padding: 1rem;
+  font-size: 1.25rem;
+  border-radius: 4px;
+}
+
+.messageBox button {
+  margin-left: 0.5rem;
+  font-size: 1.25rem;
+}
+
+.message {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 1.25rem;
+  background-color: rgba(256, 256, 256, 0.8);
+  list-style: none;
+
+}
+
+.messageInner {
+  display: flex;
+  flex-direction: column;
+}
+
+.messageSender {
+  color: #333;
+  font-size: 0.8rem;
+  margin-bottom: 5px;
+}
+
+.messageBody {
+  word-wrap: break-word;
+}
+

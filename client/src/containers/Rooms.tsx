@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useSockets } from './../context/socket.context';
 import { EVENTS } from '../config/events';
+import styles from '../styles/Rooms.module.css';
 
 export const RoomsContainer = () => {
   const { socket, roomId, rooms } = useSockets();
@@ -18,29 +19,30 @@ export const RoomsContainer = () => {
   const handleJoinRoom = (id: string) => {
     console.log('from joinned room: ', id);
     if (roomId === id) return;
-    socket.emit(EVENTS.CLIENT.JOIN_ROMM, {roomId: id});
+    socket.emit(EVENTS.CLIENT.JOIN_ROMM, { roomId: id });
   };
 
   return (
-    <div>
-      <div>
+    <div className={styles.wrapper}>
+      <div className={styles.createRoomWrapper}>
         <input
           value={roomName}
           onChange={(e) => setRoomName(e.target.value)}
           placeholder='room name'
         />
-        <button onClick={handleCreateRoom}>Create Room</button>
+        <button className='cta' onClick={handleCreateRoom}>
+          Create Room
+        </button>
       </div>
-      {rooms.map(({ id, name }) => (
-        <div key={id}>
-          <button
-            disabled={roomId === id}
-            onClick={() => handleJoinRoom(id)}
-          >
-            {name}
-          </button>
-        </div>
-      ))}
+      <ul className={styles.roomList}>
+        {rooms.map(({ id, name }) => (
+          <div key={id}>
+            <button disabled={roomId === id} onClick={() => handleJoinRoom(id)}>
+              {name}
+            </button>
+          </div>
+        ))}
+      </ul>
     </div>
   );
 };

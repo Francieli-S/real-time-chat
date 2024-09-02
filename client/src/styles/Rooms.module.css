@@ -1,0 +1,48 @@
+.wrapper {
+  width: 400px;
+  height: 100vh;
+  background-color: rgba(256, 256, 256, 0.8);
+  padding: 1rem;
+  box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
+  overflow-y: auto;
+}
+
+@media only screen and (max-width: 1200px) {
+  .wrapper {
+    width: 250px;
+  }
+}
+
+.createRoomWrapper {
+  padding-bottom: 1rem;
+  border-bottom: solid 1px #ccc;
+}
+
+.createRoomWrapper button, .createRoomWrapper input {
+  width: 100%;
+  font-size: 1rem;
+}
+
+.createRoomWrapper input {
+  margin-bottom: 0.5rem;
+}
+
+.roomList {
+  list-style: none;
+  padding: 0;
+}
+
+.roomList button {
+  width: 100px;
+  margin-bottom: 0.5rem;
+  background-color: #333;
+  display: flex;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.roomList button:disabled {
+  background-color: #ccc;
+  cursor: default;
+}
+

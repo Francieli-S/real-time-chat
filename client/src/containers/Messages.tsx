@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { useSockets } from './../context/socket.context';
 import { EVENTS } from '../config/events';
+import styles from '../styles/Messages.module.css';
 
 export const MessagesContainer = () => {
   const { socket, messages, roomId, username, setMessages } = useSockets();
   const [messageInput, setMessageInput] = useState<string>('');
 
-  const handleSendMessage = () => { 
+  const handleSendMessage = () => {
     console.log('room id: ', roomId);
     if (messageInput === undefined || typeof messageInput !== 'string') return;
     messageInput.trim();
@@ -36,20 +37,31 @@ export const MessagesContainer = () => {
   };
 
   return (
-    <div>
-      {messages?.map((message, index) => (
-        <p key={index}>
-          {message.time} - {message.username === username ? 'You' : message.username}: {message.content}
-        </p>
-      ))}
-      <div>
+    <div className={styles.wrapper}>
+      <ul className={styles.messageList}>
+        {messages?.map((message, index) => (
+          <li key={index} className={styles.message}>
+            <p className={styles.messageInner}>
+              <span className={styles.messageSender}>
+                {message.time} -{' '}
+                {message.username === username ? 'You' : message.username}:{' '}
+                <br />
+                <span className={styles.messageBody}>{message.content}</span>
+              </span>
+            </p>
+          </li>
+        ))}
+      </ul>
+      <div className={styles.messageBox}>
         <textarea
           value={messageInput}
           onChange={(e) => setMessageInput(e.target.value)}
           rows={1}
           placeholder='message'
         />
-        <button onClick={handleSendMessage}>Send</button>
+        <button className='cta' onClick={handleSendMessage}>
+          Send
+        </button>
       </div>
     </div>
   );
