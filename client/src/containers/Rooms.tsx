@@ -9,12 +9,16 @@ export const RoomsContainer = () => {
   const handleCreateRoom = () => {
     if (roomName === undefined || typeof roomName !== 'string') return;
     roomName.trim();
-    console.log(roomName);
 
     // emit created room event
     socket.emit(EVENTS.CLIENT.CREATE_ROOM, { roomName });
-
     setRoomName('');
+  };
+
+  const handleJoinRoom = (id: string) => {
+    console.log('from joinned room: ', id);
+    if (roomId === id) return;
+    socket.emit(EVENTS.CLIENT.JOIN_ROMM, {roomId: id});
   };
 
   return (
@@ -28,7 +32,14 @@ export const RoomsContainer = () => {
         <button onClick={handleCreateRoom}>Create Room</button>
       </div>
       {rooms.map(({ id, name }) => (
-        <div key={id}>{name}</div>
+        <div key={id}>
+          <button
+            disabled={roomId === id}
+            onClick={() => handleJoinRoom(id)}
+          >
+            {name}
+          </button>
+        </div>
       ))}
     </div>
   );

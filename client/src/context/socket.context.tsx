@@ -15,12 +15,20 @@ interface Room {
   name: string;
 }
 
+interface Message {
+  username: string
+  content: string
+  time: string
+}
+
 interface Context {
   socket: Socket;
   username?: string;
   setUsername: (value?: string) => void;
   roomId?: string; // the room that user joined
   rooms: Room[];
+  messages?: Message[]
+  setMessages: (value?: Message[]) => void
 }
 
 // initiate connection with the backend socket server
@@ -29,13 +37,15 @@ export const socket = io(SOCKET_URL);
 export const SocketContext = createContext<Context>({
   socket,
   setUsername: () => '',
-  rooms: [{ id: '', name: '' }],
+  rooms: [],
+  setMessages: () => []
 });
 
 const SocketsProvider = ({ children }: { children: React.ReactNode }) => {
   const [username, setUsername] = useState<string | undefined>('');
   const [roomId, setRoomId] = useState<string | undefined>('');
-  const [rooms, setRooms] = useState([{ id: '', name: '' }]);
+  const [rooms, setRooms] = useState([]);
+  const [messages, setMessages] = useState<Message[] | undefined>([])
 
   const userNameFromLocalStorage = localStorage.getItem('username');
   if (userNameFromLocalStorage && !username) {
@@ -49,13 +59,23 @@ const SocketsProvider = ({ children }: { children: React.ReactNode }) => {
   });
 
   socket.on(EVENTS.SERVER.JOINED_ROOM, (value) => {
-    setRoomId(value);
+    console.log('value room: ', value);
+    setRoomId(value.roomId);
+    setMessages(value.messages)
+  });
+
+  socket.on(EVENTS.SERVER.ROOM_MESSAGE, (value) => {
+    if (messages) {
+      setMessages([...messages, value])
+    } else {
+      setMessages([value])
+    }
   });
 
   return (
     // We are passing the socket (connection) to every children
     <SocketContext.Provider
-      value={{ socket, username, setUsername, roomId, rooms }}
+      value={{ socket, username, setUsername, roomId, rooms, messages, setMessages }}
     >
       {children}
     </SocketContext.Provider>
