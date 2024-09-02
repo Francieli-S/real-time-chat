@@ -38,13 +38,20 @@
 }
 
 .message {
+  width: 50%;
   margin-bottom: 1rem;
+  margin-left: 475px;
   padding: 1rem;
   border-radius: 8px;
   font-size: 1.25rem;
   background-color: rgba(256, 256, 256, 0.8);
   list-style: none;
+}
 
+.myMessage {
+  background-color: rgb(144, 144, 239);
+  color: aliceblue;
+  margin-left: 0;
 }
 
 .messageInner {

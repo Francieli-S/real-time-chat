@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSockets } from './../context/socket.context';
 import { EVENTS } from '../config/events';
 import styles from '../styles/Messages.module.css';
@@ -6,6 +6,7 @@ import styles from '../styles/Messages.module.css';
 export const MessagesContainer = () => {
   const { socket, messages, roomId, username, setMessages } = useSockets();
   const [messageInput, setMessageInput] = useState<string>('');
+  const messageEndRef = useRef<HTMLDivElement>(null);
 
   const handleSendMessage = () => {
     console.log('room id: ', roomId);
@@ -36,11 +37,23 @@ export const MessagesContainer = () => {
     setMessageInput('');
   };
 
+  useEffect(() => {
+    messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
+  // see later if it solves that issue that send message to the wrong room
+  if (!roomId) return null;
+  console.log('username', username);
+
   return (
     <div className={styles.wrapper}>
       <ul className={styles.messageList}>
         {messages?.map((message, index) => (
-          <li key={index} className={styles.message}>
+          <li
+            key={index}
+            className={`${styles.message} ${message.username !== 'You' && styles.myMessage}
+            `}
+          >
             <p className={styles.messageInner}>
               <span className={styles.messageSender}>
                 {message.time} -{' '}
@@ -51,6 +64,7 @@ export const MessagesContainer = () => {
             </p>
           </li>
         ))}
+        <div ref={messageEndRef} />
       </ul>
       <div className={styles.messageBox}>
         <textarea
